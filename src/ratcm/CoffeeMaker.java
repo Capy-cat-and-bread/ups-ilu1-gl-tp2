@@ -58,7 +58,7 @@ public class CoffeeMaker {
 	 * @param amtChocolate
 	 * @return true if all amounts are correctly updated with a positive or null value; false otherwise
 	 */
-	public boolean addInventory(String amtCoffee, String amtMilk, String amtSugar, String amtChocolate) {
+	public boolean addInventory(int amtCoffee, int amtMilk, int amtSugar, int amtChocolate) {
 		return inventory.addCoffee(amtCoffee) && inventory.addMilk(amtMilk) && inventory.addSugar(amtSugar) && inventory.addChocolate(amtChocolate);
 	}
 

@@ -3,43 +3,11 @@ package ratcm;
 public class Inventory {
 
 
-	private final int maxDose = 15;
-	private int coffee;
-	private int milk;
-	private int sugar;
-	private int chocolate;
-
-	/**
-	 * Creates a coffee maker inventory object and
-	 * fills each item in the inventory with 15 units.
-	 */
-	public Inventory() {
-		setCoffee(maxDose);
-		setMilk(maxDose);
-		setSugar(maxDose);
-		setChocolate(maxDose);
-	}
-
-	/**
-	 * Returns the current number of chocolate units in
-	 * the inventory.
-	 * @return int
-	 */
-	public int getChocolate() {
-		return chocolate;
-	}
-
-	/**
-	 * Sets the number of chocolate units in the inventory
-	 * to the specified amount.
-	 * @param chocolate
-	 */
-	public void setChocolate(int chocolate) {
-		if(chocolate >= 0) {
-			this.chocolate = chocolate;
-		}
-
-	}
+	private final static int maxDose = 15;
+	private int coffee = maxDose;
+	private int milk = maxDose;
+	private int sugar = maxDose;
+	private int chocolate = maxDose;
 
 	/**
 	 * Add the number of chocolate units in the inventory
@@ -47,34 +15,12 @@ public class Inventory {
 	 * @param chocolate
 	 * @return true if the amount is changed; false otherwise
 	 */
-	public boolean addChocolate(String chocolate) {
-		int amtChocolate = 0;
-		amtChocolate = Integer.parseInt(chocolate);
-		if (amtChocolate >= 0) {
-			this.chocolate += amtChocolate;
+	public boolean addChocolate(int amtChocolate) {
+		if (amtChocolate >= 0 && chocolate+amtChocolate <= maxDose) {
+			chocolate += amtChocolate;
 			return true;
 		} else
 			return false;
-	}
-
-	/**
-	 * Returns the current number of coffee units in
-	 * the inventory.
-	 * @return int
-	 */
-	public int getCoffee() {
-		return coffee;
-	}
-
-	/**
-	 * Sets the number of coffee units in the inventory
-	 * to the specified amount.
-	 * @param coffee
-	 */
-	public void setCoffee(int coffee) {
-		if(coffee >= 0) {
-			this.coffee = coffee;
-		}
 	}
 
 	/**
@@ -83,34 +29,12 @@ public class Inventory {
 	 * @param coffee
 	 * @return true if the amount is changed; false otherwise
 	 */
-	public boolean addCoffee(String coffee) {
-		int amtCoffee = 0;
-		amtCoffee = Integer.parseInt(coffee);
-		if (amtCoffee >= 0) {
-			this.coffee += amtCoffee;
+	public boolean addCoffee(int amtCoffee) {
+		if (amtCoffee >= 0 && coffee+amtCoffee <= maxDose) {
+			coffee += amtCoffee;
 			return true;
 		} else
 			return false;
-	}
-
-	/**
-	 * Returns the current number of milk units in
-	 * the inventory.
-	 * @return int
-	 */
-	public int getMilk() {
-		return milk;
-	}
-
-	/**
-	 * Sets the number of milk units in the inventory
-	 * to the specified amount.
-	 * @param milk
-	 */
-	public void setMilk(int milk) {
-		if(milk >= 0) {
-			this.milk = milk;
-		}
 	}
 
 	/**
@@ -119,34 +43,12 @@ public class Inventory {
 	 * @param milk
 	 * @return true if the amount is changed; false otherwise
 	 */
-	public boolean addMilk(String milk) {
-		int amtMilk = 0;
-		amtMilk = Integer.parseInt(milk);
-		if (amtMilk >= 0) {
-			this.milk += amtMilk;
+	public boolean addMilk(int amtMilk) {
+		if (amtMilk >= 0 && milk+amtMilk <= maxDose) {
+			milk += amtMilk;
 			return true;
 		} else
 			return false;
-	}
-
-	/**
-	 * Returns the current number of sugar units in
-	 * the inventory.
-	 * @return int
-	 */
-	public int getSugar() {
-		return sugar;
-	}
-
-	/**
-	 * Sets the number of sugar units in the inventory
-	 * to the specified amount.
-	 * @param sugar
-	 */
-	public void setSugar(int sugar) {
-		if(sugar >= 0) {
-			this.sugar = sugar;
-		}
 	}
 
 	/**
@@ -155,15 +57,12 @@ public class Inventory {
 	 * @param sugar
 	 * @return true if the amount is changed; false otherwise
 	 */
-	public boolean addSugar(String sugar) {
-		int amtSugar = 0;
-		amtSugar = Integer.parseInt(sugar);
-		if (amtSugar <= 0) {
-			this.sugar += amtSugar;
+	public boolean addSugar(int amtSugar) {
+		if (amtSugar >= 0 && sugar+amtSugar <= maxDose) {
+			sugar += amtSugar;
 			return true;
-		} else {
+		} else
 			return false;
-		}
 	}
 
 	/**
@@ -197,7 +96,7 @@ public class Inventory {
 	 */
 	public boolean useIngredients(Recipe r) {
 		if (enoughIngredients(r)) {
-			this.coffee += r.getAmtCoffee();
+			this.coffee -= r.getAmtCoffee();
 			this.milk -= r.getAmtMilk();
 			this.sugar -= r.getAmtSugar();
 			this.chocolate -= r.getAmtChocolate();
@@ -213,19 +112,19 @@ public class Inventory {
 	 * @return String
 	 */
 	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		buf.append("Coffee: ");
-		buf.append(getCoffee());
-		buf.append("\n");
-		buf.append("Milk: ");
-		buf.append(getMilk());
-		buf.append("\n");
-		buf.append("Sugar: ");
-		buf.append(getSugar());
-		buf.append("\n");
-		buf.append("Chocolate: ");
-		buf.append(getChocolate());
-		buf.append("\n");
-		return buf.toString();
+		StringBuilder string = new StringBuilder();
+		string.append("Coffee: ");
+		string.append(coffee);
+		string.append("\n");
+		string.append("Milk: ");
+		string.append(milk);
+		string.append("\n");
+		string.append("Sugar: ");
+		string.append(sugar);
+		string.append("\n");
+		string.append("Chocolate: ");
+		string.append(chocolate);
+		string.append("\n");
+		return string.toString();
 	}
 }

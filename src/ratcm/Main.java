@@ -54,30 +54,30 @@ public class Main {
 	public static void addRecipe() {
 
 		// Read in recipe name
+		Recipe r = new Recipe();
 		String name = inputOutput("\nPlease enter the recipe name: ");
+		r.setName(name);
 
 		// Read in recipe price
-		String priceString = inputOutput("\nPlease enter the recipe price: $");
+		int priceInt = parseQuantity(inputOutput("\nPlease enter the recipe price: $"));
 
 		// Read in amt coffee
-		String coffeeString = inputOutput("\nPlease enter the units of coffee in the recipe: ");
+		int coffeeInt = parseQuantity(inputOutput("\nPlease enter the units of coffee in the recipe: "));
 
 		// Read in amt milk
-		String milkString = inputOutput("\nPlease enter the units of milk in the recipe: ");
+		int milkInt = parseQuantity(inputOutput("\nPlease enter the units of milk in the recipe: "));
 
 		// Read in amt sugar
-		String sugarString = inputOutput("\nPlease enter the units of sugar in the recipe: ");
+		int sugarInt = parseQuantity(inputOutput("\nPlease enter the units of sugar in the recipe: "));
 
 		// Read in amt chocolate
-		String chocolateString = inputOutput("\nPlease enter the units of chocolate in the recipe: ");
+		int chocolateInt = parseQuantity(inputOutput("\nPlease enter the units of chocolate in the recipe: "));
 
-		Recipe r = new Recipe();
-		r.setName(name);
-		r.setPrice(priceString);
-		r.setAmtCoffee(coffeeString);
-		r.setAmtMilk(milkString);
-		r.setAmtSugar(sugarString);
-		r.setAmtChocolate(chocolateString);
+		r.setPrice(priceInt);
+		r.setAmtCoffee(coffeeInt);
+		r.setAmtMilk(milkInt);
+		r.setAmtSugar(sugarInt);
+		r.setAmtChocolate(chocolateInt);
 
 		boolean recipeAdded = coffeeMaker.addRecipe(r);
 
@@ -131,27 +131,7 @@ public class Main {
 			mainMenu();
 		}
 
-		// Read in recipe price
-		String priceString = inputOutput("\nPlease enter the recipe price: $");
-
-		// Read in amt coffee
-		String coffeeString = inputOutput("\nPlease enter the units of coffee in the recipe: ");
-
-		// Read in amt milk
-		String milkString = inputOutput("\nPlease enter the units of milk in the recipe: ");
-
-		// Read in amt sugar
-		String sugarString = inputOutput("\nPlease enter the units of sugar in the recipe: ");
-
-		// Read in amt chocolate
-		String chocolateString = inputOutput("\nPlease enter the units of chocolate in the recipe: ");
-
-		Recipe newRecipe = new Recipe();
-		newRecipe.setPrice(priceString);
-		newRecipe.setAmtCoffee(coffeeString);
-		newRecipe.setAmtMilk(milkString);
-		newRecipe.setAmtSugar(sugarString);
-		newRecipe.setAmtChocolate(chocolateString);
+		Recipe newRecipe = createRecipeFromInput();
 
 		String recipeEdited = coffeeMaker.editRecipe(recipeToEdit, newRecipe);
 
@@ -163,21 +143,46 @@ public class Main {
 		mainMenu();
 	}
 
+	private static Recipe createRecipeFromInput() {
+		// Read in recipe price
+		int priceInt = parseQuantity(inputOutput("\nPlease enter the recipe price: $"));
+
+		// Read in amt coffee
+		int coffeeInt = parseQuantity(inputOutput("\nPlease enter the units of coffee in the recipe: "));
+
+		// Read in amt milk
+		int milkInt = parseQuantity(inputOutput("\nPlease enter the units of milk in the recipe: "));
+
+		// Read in amt sugar
+		int sugarInt = parseQuantity(inputOutput("\nPlease enter the units of sugar in the recipe: "));
+
+		// Read in amt chocolate
+		int chocolateInt = parseQuantity(inputOutput("\nPlease enter the units of chocolate in the recipe: "));
+
+		Recipe newRecipe = new Recipe();
+		newRecipe.setPrice(priceInt);
+		newRecipe.setAmtCoffee(coffeeInt);
+		newRecipe.setAmtMilk(milkInt);
+		newRecipe.setAmtSugar(sugarInt);
+		newRecipe.setAmtChocolate(chocolateInt);
+		return newRecipe;
+	}
+
 	/**
 	 * Add inventory user interface that processes input.
 	 */
 	public static void addInventory() {
 		// Read in amt coffee
-		String coffeeString = inputOutput("\nPlease enter the units of coffee to add: ");
+		int coffeeString = parseQuantity(inputOutput("\nPlease enter the units of coffee to add: "));
 
 		// Read in amt milk
-		String milkString = inputOutput("\nPlease enter the units of milk to add: ");
+		int milkString = parseQuantity(inputOutput("\nPlease enter the units of milk to add: "));
 
 		// Read in amt sugar
-		String sugarString = inputOutput("\nPlease enter the units of sugar to add: ");
+		int sugarString = parseQuantity(inputOutput("\nPlease enter the units of sugar to add: "));
 
 		// Read in amt chocolate
-		String chocolateString = inputOutput("\nPlease enter the units of chocolate to add: ");
+		int chocolateString = parseQuantity(inputOutput("\nPlease enter the units of chocolate to add: "));
 
 		if (coffeeMaker.addInventory(coffeeString, milkString, sugarString, chocolateString)) {
 			System.out.println("Inventory successfully added");
@@ -279,5 +284,13 @@ public class Main {
 		coffeeMaker = new CoffeeMaker();
 		System.out.println("Welcome to the CoffeeMaker!\n");
 		mainMenu();
+	}
+
+	public static int parseQuantity(String qtyString) {
+		int amt = Integer.parseInt(qtyString);
+		if (amt < 0) {
+			return 0;
+		} else
+			return amt;
 	}
 }
